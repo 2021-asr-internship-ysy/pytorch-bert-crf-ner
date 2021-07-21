@@ -8,3 +8,4 @@ konlpy
 pytorch_transformers
 sklearn
 pandas
+matplotlib
