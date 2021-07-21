@@ -54,7 +54,7 @@ def post():
             continue
         convert_keys[new_key_name] = v
 
-    model.load_state_dict(convert_keys)
+    model.load_state_dict(convert_keys, strict=False)
     model.eval()
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     model.to(device)
