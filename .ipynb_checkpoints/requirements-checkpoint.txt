@@ -1,0 +1,11 @@
+torch
+gluonnlp
+mxnet
+transformers
+pytorch-crf
+tensorflow
+konlpy
+pytorch_transformers
+sklearn
+pandas
+matplotlib
