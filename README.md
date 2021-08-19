@@ -154,3 +154,14 @@ python inference.py
 - [SKTBrain KoBERT](https://github.com/SKTBrain/KoBERT)
 - [Finetuning configuration from huggingface](https://github.com/huggingface/pytorch-transformers/blob/master/examples/run_multiple_choice.py)
 - [BERT Attention Visualization](https://github.com/jessevig/bertviz)
+
+### 주요 수정사항
+-jvocab_aihub1.json : 기존 AIHUB의 vocab 파일을 pytorch-bert-crf-ner repo에 맞추어 구동될 시 필요한 key값을 모두 포함하여 json 파일로 제작.
+-jamo 라이브러리 및 join_jamo.py 파일 : AIHUB의 tokenization_morp.py 파일이 자모 결합 오류 없이 정상적으로 작동하기 위해 필요하다.
+-vocab_tokenizer_aihub.py : 기존의 vocab_tokenizer 파일의 Tokenizer 클래스 부분을 AIHUB의 tokenization_morp.py 코드를 참고해 수정하였다.
+
+### 개선점
+- 서로 다른 글자의 초-중-종성이 섞이는 문제점이 존재한다. AIHUB의 tokenizer가 서로 다른 글자의 초-중-종성을 섞어놓지 않게 tokenizer 파일의 수정이 필요하다.
+- inference 파일을 이용해 실제 NE detection 수행 시 기존의 코드에 비해 속도가 많이 느린 감이 있다. 실제로 이것이 오래 걸리는 문제가 있는지 측정하고 만약 오래 걸리는 것이 맞다면 개선이 필요하다.
+- 초-중-종성이 섞이는 경우가 거의 없는 DAT 토큰의 경우 맨 끝글자인 “월”, “일” 만 NE detection이 진행되거나 정확한 범위를 파악하지 못하는 경우가 존재한다. 해당 이슈의 원인분석이 필요하다.
+- AIHUB의 vocab 파일의 경우 단어가 평균적으로 문장 내에서 나오는 빈도수 및 품사가 함께 표시되어 있다. 해당 정보를 사용할 수 있는 NE detection 학습 모델의 제작이 이루어진다면 개선된 퍼포먼스를 얻을 수 있을 것으로 보인다.(특히 품사 앞뒤에 언더바가 있는데, 이를 단어에 결합시켜 사용한다면 띄어쓰기를 사이에 두고 어두에 있는지 어미에 있는지를 파악하여 단일 글자에 대해 보다 정확한 의미파악이 가능할 것 같다.)
